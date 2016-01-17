@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+void merge(int a[],int beg,int m,int end,int size)
+{
+	int i=beg;
+	int j=m+1;
+	int index=beg;
+	int temp[size];
+	while((i<=m) && (j<=end)){
+		if(a[i]<a[j]){
+			temp[index]=a[i];
+			i++;
+		}
+		else if(a[i]>=a[j]){
+			temp[index]=a[j];
+			j++;
+		}
+		index++;
+	}
+	if(i>m){
+		while(j<=end){
+			temp[index]=a[j];
+			j++;
+			index++;
+		}
+	}
+	else{
+		while(i<=m){
+			temp[index]=a[i];
+			i++;
+			index++;
+		}
+	}
+	for(int i=beg;i<index;i++){
+		a[i]=temp[i];
+	}
+}
+void merge_sort(int a[],int beg,int end,int size)
+{
+	int mid;
+	if(beg<end){
+	mid=(beg+end)/2;
+	merge_sort(a,beg,mid,size);
+	merge_sort(a,mid+1,end,size);
+	merge(a,beg,mid,end,size);
+	}
+}
+int main() {
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++){
+		 cin>>a[i];
+	}
+		merge_sort(a,0,n-1,n);
+		
+	for(int i=0;i<n;i++){
+		cout<<a[i]<<"\t";
+	}
+	return 0;
+}
